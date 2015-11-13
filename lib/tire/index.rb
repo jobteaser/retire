@@ -333,7 +333,7 @@ module Tire
         type     = get_type_from_document(document)
         id       = get_id_from_document(document) || document
       end
-      raise ArgumentError, "Please pass a document ID" unless id
+      raise ArgumentError, "Please pass a document ID" if id.blank?
 
       url    = "#{self.url}/#{type}/#{Utils.escape(id)}"
       result = Configuration.client.delete url
