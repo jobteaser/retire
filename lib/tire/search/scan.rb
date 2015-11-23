@@ -46,7 +46,7 @@ module Tire
 
       def initialize(indices=nil, options={}, &block)
         @indices = Array(indices)
-        @options = options.update(:search_type => 'scan', :scroll => '2m')
+        @options = options.update(:search_type => 'scan', :scroll => '10s')
         @seen    = 0
         @search  = Search.new(@indices, @options, &block)
       end
