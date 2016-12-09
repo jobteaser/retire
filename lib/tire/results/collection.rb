@@ -153,8 +153,19 @@ module Tire
         end
       end
 
+      KEY_MAPPING = {
+        include: :includes,
+        conditions: :where
+      }.freeze
+
       def __find_records_by_ids(klass, ids)
-        @options[:load] === true ? klass.find(ids) : klass.find(ids, @options[:load])
+        return klass.find(ids) if @options[:load] === true
+        scope = klass
+        @options[:load].each_pair do |key, value|
+          key = KEY_MAPPING[key] || key
+          scope = scope.send(key, value)
+        end
+        scope.find(ids)
       end
     end
 
